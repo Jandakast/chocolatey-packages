@@ -1,10 +1,10 @@
 ﻿$ErrorActionPreference = 'Stop'
 
 # DO NOT CHANGE THESE MANUALLY. USE update.ps1
-$url = 'https://releases.hashicorp.com/vault/1.6.0/vault_1.6.0_windows_386.zip'
-$url64 = 'https://releases.hashicorp.com/vault/1.6.0/vault_1.6.0_windows_amd64.zip'
-$checksum = '59779ef2bcb9988d853a4b5a64c18e9beffb297114f3509a9878d605739b84f5'
-$checksum64 = 'f4df525126885663a622478de34a9e6970985e29875b86cbb5a72860b7ab1a3f'
+$url = 'https://releases.hashicorp.com/vault/1.6.1/vault_1.6.1_windows_386.zip'
+$url64 = 'https://releases.hashicorp.com/vault/1.6.1/vault_1.6.1_windows_amd64.zip'
+$checksum = '1d21d2195b4a1b2cae9d34b51fa4d04803337a7dce0395dae550fb2a05f10a48'
+$checksum64 = '4a9b0c803098e745f22bdd510205803ceb4c800fb9c89810c784b6a9e9abc4a4'
 
 $unzipLocation = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
