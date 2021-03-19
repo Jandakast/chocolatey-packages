@@ -5,7 +5,7 @@
     <!-- Read this before publishing packages to chocolatey.org: https://github.com/chocolatey/chocolatey/wiki/CreatePackages -->
     <id>vault</id>
     <title>Vault</title>
-    <version>1.6.1</version>
+    <version>1.6.3</version>
     <authors>Mitchell Hashimoto, HashiCorp</authors>
     <owners>James Toyer</owners>
     <summary>Vault is a tool for securely accessing secrets</summary>
@@ -25,49 +25,34 @@ The key features of Vault are:
 For more information, see the [introduction section](https://www.vaultproject.io/intro) of the Vault website.
     </description>
     <releaseNotes>
-## 1.6.1
-### December 16, 2020
+## 1.6.3
+### February 25, 2021
 
 SECURITY:
 
-* LDAP Auth Method: We addressed an issue where error messages returned by the
-  LDAP auth methold allowed user enumeration [[GH-10537](https://github.com/hashicorp/vault/pull/10537)]. This vulnerability affects Vault OSS and Vault 
-  Enterprise and is fixed in 1.5.6 and 1.6.1 (CVE-2020-35177).
-* Sentinel EGP: We've fixed incorrect handling of namespace paths to prevent
-  users within namespaces from applying Sentinel EGP policies to paths above
-  their namespace. This vulnerability affects Vault Enterprise and is fixed in
-  1.5.6 and 1.6.1 (CVE-2020-35453).
+* Limited Unauthenticated License Metadata Read: We addressed a security vulnerability that allowed for the unauthenticated
+reading of Vault license metadata from DR Secondaries. This vulnerability affects Vault Enterprise and is
+fixed in 1.6.3 (CVE-2021-27668).
+
+CHANGES:
+
+* secrets/mongodbatlas: Move from whitelist to access list API [[GH-10966](https://github.com/hashicorp/vault/pull/10966)]
 
 IMPROVEMENTS:
 
-* auth/ldap: Improve consistency in error messages [[GH-10537](https://github.com/hashicorp/vault/pull/10537)]
-* core/metrics: Added "vault operator usage" command. [[GH-10365](https://github.com/hashicorp/vault/pull/10365)]
-* secrets/gcp: Truncate ServiceAccount display names longer than 100 characters. [[GH-10558](https://github.com/hashicorp/vault/pull/10558)]
+* ui: Clarify language on usage metrics page empty state [[GH-10951](https://github.com/hashicorp/vault/pull/10951)]
 
 BUG FIXES:
 
-* agent: Only set the namespace if the VAULT_NAMESPACE env var isn't present [[GH-10556](https://github.com/hashicorp/vault/pull/10556)]
-* auth/jwt: Fixes `bound_claims` validation for provider-specific group and user info fetching. [[GH-10546](https://github.com/hashicorp/vault/pull/10546)]
-* core (enterprise): Vault EGP policies attached to path * were not correctly scoped to the namespace.
-* core: Avoid deadlocks by ensuring that if grabLockOrStop returns stopped=true, the lock will not be held. [[GH-10456](https://github.com/hashicorp/vault/pull/10456)]
-* core: Fix client.Clone() to include the address [[GH-10077](https://github.com/hashicorp/vault/pull/10077)]
-* core: Fix rate limit resource quota migration from 1.5.x to 1.6.x by ensuring `purgeInterval` and
-`staleAge` are set appropriately. [[GH-10536](https://github.com/hashicorp/vault/pull/10536)]
-* core: Make all APIs that report init status consistent, and make them report
-initialized=true when a Raft join is in progress. [[GH-10498](https://github.com/hashicorp/vault/pull/10498)]
-* secrets/database/influxdb: Fix issue where not all errors from InfluxDB were being handled [[GH-10384](https://github.com/hashicorp/vault/pull/10384)]
-* secrets/database/mysql: Fixes issue where the DisplayName within generated usernames was the incorrect length [[GH-10433](https://github.com/hashicorp/vault/pull/10433)]
-* secrets/database: Sanitize `private_key` field when reading database plugin config [[GH-10416](https://github.com/hashicorp/vault/pull/10416)]
-* secrets/transit: allow for null string to be used for optional parameters in encrypt and decrypt [[GH-10386](https://github.com/hashicorp/vault/pull/10386)]
-* storage/raft (enterprise): The parameter aws_s3_server_kms_key was misnamed and didn't work.  Renamed to aws_s3_kms_key, and make it work so that when provided the given key will be used to encrypt the snapshot using AWS KMS.
-* transform (enterprise): Fix bug tokenization handling metadata on exportable stores
-* transform (enterprise): Fix transform configuration not handling `stores` parameter on the legacy path
-* transform (enterprise): Make expiration timestamps human readable
-* transform (enterprise): Return false for invalid tokens on the validate endpoint rather than returning an HTTP error
-* transform (enterprise): Fix bug where tokenization store changes are persisted but don't take effect
-* ui: Fix bug in Transform secret engine when a new role is added and then removed from a transformation [[GH-10417](https://github.com/hashicorp/vault/pull/10417)]
-* ui: Fix footer URL linking to the correct version changelog. [[GH-10491](https://github.com/hashicorp/vault/pull/10491)]
-* ui: Fox radio click on secrets and auth list pages. [[GH-10586](https://github.com/hashicorp/vault/pull/10586)]
+* auth/kubernetes: Cancel API calls to TokenReview endpoint when request context
+is closed [[GH-10930](https://github.com/hashicorp/vault/pull/10930)]
+* core/identity: Fix deadlock in entity merge endpoint. [[GH-10877](https://github.com/hashicorp/vault/pull/10877)]
+* quotas: Fix duplicate quotas on performance standby nodes. [[GH-10855](https://github.com/hashicorp/vault/pull/10855)]
+* quotas/rate-limit: Fix quotas enforcing old rate limit quota paths [[GH-10689](https://github.com/hashicorp/vault/pull/10689)]
+* replication (enterprise): Don't write request count data on DR Secondaries.
+Fixes DR Secondaries becoming out of sync approximately every 30s. [[GH-10970](https://github.com/hashicorp/vault/pull/10970)]
+* secrets/azure (enterprise): Forward service principal credential creation to the
+primary cluster if called on a performance standby or performance secondary. [[GH-10902](https://github.com/hashicorp/vault/pull/10902)]
 ## Previous Releases
 For more information on previous releases, check out the changelog on [GitHub](https://github.com/hashicorp/vault/blob/master/CHANGELOG.md).</releaseNotes>
     <projectUrl>https://www.vaultproject.io/</projectUrl>
